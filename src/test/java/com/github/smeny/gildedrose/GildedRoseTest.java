@@ -2,7 +2,6 @@ package com.github.smeny.gildedrose;
 
 import com.github.smeny.gildedrose.items.AgedBrie;
 import com.github.smeny.gildedrose.items.BackstagePass;
-import com.github.smeny.gildedrose.items.Conjured;
 import com.github.smeny.gildedrose.items.Sulfuras;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +11,7 @@ import static org.hamcrest.Matchers.is;
 class GildedRoseTest {
 
     private static final String COMMON_ITEM_NAME = "item";
+    private static final String CONJURED_ITEM_NAME = "Conjured Mana Cake";
 
     @Test
     void common_item_with_positive_sell_in_degrades_quality_by_one() {
@@ -58,7 +58,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 1));
     }
@@ -71,7 +70,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInToday - 1));
         assertThat(firstItem(shop).quality, is(quality + 2));
     }
@@ -84,7 +82,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays - 1));
         assertThat(firstItem(shop).quality, is(qualityFifty));
     }
@@ -97,7 +94,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(Sulfuras.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays));
         assertThat(firstItem(shop).quality, is(Sulfuras.QUALITY));
     }
@@ -110,7 +106,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInTenDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 2));
     }
@@ -123,7 +118,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInFiveDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 3));
     }
@@ -136,7 +130,6 @@ class GildedRoseTest {
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInToday - 1));
         assertThat(firstItem(shop).quality, is(qualityZero));
     }
@@ -144,7 +137,7 @@ class GildedRoseTest {
     @Test
     void conjured_item_degrades_twice_as_fast_with_remaining_sell_in() {
         int sellInThirtyDays = 30, quality = 20;
-        Item commonItem = new Item(Conjured.NAME, sellInThirtyDays, quality);
+        Item commonItem = new Item(CONJURED_ITEM_NAME, sellInThirtyDays, quality);
         GildedRose shop = buildGildedRoseShop(commonItem);
 
         shop.updateQuality();
@@ -156,7 +149,7 @@ class GildedRoseTest {
     @Test
     void conjured_item_degrades_twice_as_fast_when_item_is_expired() {
         int sellInToday = 0, quality = 20;
-        Item commonItem = new Item(Conjured.NAME, sellInToday, quality);
+        Item commonItem = new Item(CONJURED_ITEM_NAME, sellInToday, quality);
         GildedRose shop = buildGildedRoseShop(commonItem);
 
         shop.updateQuality();

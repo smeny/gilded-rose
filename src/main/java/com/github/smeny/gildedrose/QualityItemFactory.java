@@ -11,18 +11,16 @@ class QualityItemFactory {
     }
 
     static QualityItem buildQualityItem(Item item) {
-        switch (item.name) {
-            case AgedBrie.NAME:
-                return new AgedBrie(item);
-            case Sulfuras.NAME:
-                return new Sulfuras(item);
-            case BackstagePass.NAME:
-                return new BackstagePass(item);
-            case Conjured.NAME:
-                return new Conjured(item);
-            default:
-                return new QualityItem(item);
+        if (AgedBrie.NAME.equals(item.name)) {
+            return new AgedBrie(item);
+        } else if (Sulfuras.NAME.equals(item.name)) {
+            return new Sulfuras(item);
+        } else if (BackstagePass.NAME.equals(item.name)) {
+            return new BackstagePass(item);
+        } else if (item.name.contains(Conjured.NAME)) {
+            return new Conjured(item);
         }
+        return new QualityItem(item);
     }
 
 }
