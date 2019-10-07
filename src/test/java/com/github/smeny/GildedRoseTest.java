@@ -2,7 +2,6 @@ package com.github.smeny;
 
 import org.junit.jupiter.api.Test;
 
-import static com.github.smeny.GildedRose.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -13,7 +12,7 @@ class GildedRoseTest {
     @Test
     void common_item_with_positive_sell_in_degrades_quality_by_one() {
         int sellInThirtyDays = 30, quality = 20;
-        Item commonItem = buildCommonItem(sellInThirtyDays, quality);
+        Item commonItem = new Item(COMMON_ITEM_NAME, sellInThirtyDays, quality);
         GildedRose shop = buildGildedRoseShop(commonItem);
 
         shop.updateQuality();
@@ -26,7 +25,7 @@ class GildedRoseTest {
     @Test
     void common_item_with_passed_sell_in_degrades_quality_twice_as_fast() {
         int sellInToday = 0, quality = 20;
-        Item commonItem = buildCommonItem(sellInToday, quality);
+        Item commonItem = new Item(COMMON_ITEM_NAME, sellInToday, quality);
         GildedRose shop = buildGildedRoseShop(commonItem);
 
         shop.updateQuality();
@@ -38,7 +37,7 @@ class GildedRoseTest {
     @Test
     void common_item_never_has_negative_quality() {
         int sellInThirtyDays = 30, zeroQuality = 0;
-        Item commonItem = buildCommonItem(sellInThirtyDays, zeroQuality);
+        Item commonItem = new Item(COMMON_ITEM_NAME, sellInThirtyDays, zeroQuality);
         GildedRose shop = buildGildedRoseShop(commonItem);
 
         shop.updateQuality();
@@ -50,12 +49,12 @@ class GildedRoseTest {
     @Test
     void aged_brie_increases_in_quality_by_one() {
         int sellInThirtyDays = 30, quality = 20;
-        Item agedBrie = buildAgedBrie(sellInThirtyDays, quality);
+        Item agedBrie = new Item(AgedBrie.NAME, sellInThirtyDays, quality);
         GildedRose shop = buildGildedRoseShop(agedBrie);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AGED_BRIE_NAME));
+        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 1));
     }
@@ -63,12 +62,12 @@ class GildedRoseTest {
     @Test
     void aged_brie_with_passed_sell_in_increases_in_quality_twice_as_fast() {
         int sellInToday = 0, quality = 20;
-        Item agedBrie = buildAgedBrie(sellInToday, quality);
+        Item agedBrie = new Item(AgedBrie.NAME, sellInToday, quality);
         GildedRose shop = buildGildedRoseShop(agedBrie);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AGED_BRIE_NAME));
+        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInToday - 1));
         assertThat(firstItem(shop).quality, is(quality + 2));
     }
@@ -76,12 +75,12 @@ class GildedRoseTest {
     @Test
     void aged_brie_quality_is_never_more_than_fifty() {
         int sellInThirtyDays = 30, qualityFifty = 50;
-        Item agedBrie = buildAgedBrie(sellInThirtyDays, qualityFifty);
+        Item agedBrie = new Item(AgedBrie.NAME, sellInThirtyDays, qualityFifty);
         GildedRose shop = buildGildedRoseShop(agedBrie);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(AGED_BRIE_NAME));
+        assertThat(firstItem(shop).name, is(AgedBrie.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays - 1));
         assertThat(firstItem(shop).quality, is(qualityFifty));
     }
@@ -89,71 +88,57 @@ class GildedRoseTest {
     @Test
     void sulfuras_never_decreases_sell_in_or_quality() {
         int sellInThirtyDays = 30;
-        Item sulfuras = buildSulfuras(sellInThirtyDays);
+        Item sulfuras = new Item(Sulfuras.NAME, sellInThirtyDays, Sulfuras.QUALITY);
         GildedRose shop = buildGildedRoseShop(sulfuras);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(SULFURAS_NAME));
+        assertThat(firstItem(shop).name, is(Sulfuras.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInThirtyDays));
-        assertThat(firstItem(shop).quality, is(SULFURAS_QUALITY));
+        assertThat(firstItem(shop).quality, is(Sulfuras.QUALITY));
     }
 
     @Test
     void backstage_pass_quality_increases_by_two_when_sell_in_ten_days_or_less() {
         int sellInTenDays = 10, quality = 20;
-        Item backstagePass = buildBackstagePass(sellInTenDays, quality);
+        Item backstagePass = new Item(BackstagePass.NAME, sellInTenDays, quality);
         GildedRose shop = buildGildedRoseShop(backstagePass);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BACKSTAGE_PASS_NAME));
+        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInTenDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 2));
     }
+
     @Test
     void backstage_pass_quality_increases_by_three_when_sell_in_five_days_or_less() {
         int sellInFiveDays = 5, quality = 20;
-        Item backstagePass = buildBackstagePass(sellInFiveDays, quality);
+        Item backstagePass = new Item(BackstagePass.NAME, sellInFiveDays, quality);
         GildedRose shop = buildGildedRoseShop(backstagePass);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BACKSTAGE_PASS_NAME));
+        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInFiveDays - 1));
         assertThat(firstItem(shop).quality, is(quality + 3));
     }
+
     @Test
     void backstage_pass_quality_decreases_to_zero_when_sell_in_after_concert() {
         int sellInToday = 0, quality = 20, qualityZero = 0;
-        Item backstagePass = buildBackstagePass(sellInToday, quality);
+        Item backstagePass = new Item(BackstagePass.NAME, sellInToday, quality);
         GildedRose shop = buildGildedRoseShop(backstagePass);
 
         shop.updateQuality();
 
-        assertThat(firstItem(shop).name, is(BACKSTAGE_PASS_NAME));
+        assertThat(firstItem(shop).name, is(BackstagePass.NAME));
         assertThat(firstItem(shop).sellIn, is(sellInToday - 1));
         assertThat(firstItem(shop).quality, is(qualityZero));
     }
 
     private static GildedRose buildGildedRoseShop(Item... items) {
         return new GildedRose(items);
-    }
-
-    private static Item buildCommonItem(int sellIn, int quality) {
-        return new Item(COMMON_ITEM_NAME, sellIn, quality);
-    }
-
-    private static Item buildSulfuras(int sellIn) {
-        return new Item(GildedRose.SULFURAS_NAME, sellIn, GildedRose.SULFURAS_QUALITY);
-    }
-
-    private static Item buildAgedBrie(int sellIn, int quality) {
-        return new Item(AGED_BRIE_NAME, sellIn, quality);
-    }
-
-    private static Item buildBackstagePass(int sellIn, int quality) {
-        return new Item(BACKSTAGE_PASS_NAME, sellIn, quality);
     }
 
     private static Item firstItem(GildedRose shop) {
