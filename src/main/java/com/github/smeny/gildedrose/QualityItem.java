@@ -1,21 +1,29 @@
-package com.github.smeny;
+package com.github.smeny.gildedrose;
 
-class QualityItem {
+public class QualityItem {
 
     private static final int ITEM_MINIMUM_QUALITY = 0;
     private static final int ITEM_MAXIMUM_QUALITY = 50;
 
-    Item item;
+    private Item item;
 
-    QualityItem(Item item) {
+    public QualityItem(Item item) {
         this.item = item;
     }
 
-    void updateQuality() {
+    protected int itemSellIn() {
+        return item.sellIn;
+    }
+
+    protected void setQuality(int quality) {
+        item.quality = quality;
+    }
+
+    protected void updateQuality() {
         decreaseItemQualityIfOverMinimum();
     }
 
-    void decreaseSellInDays() {
+    protected void decreaseSellInDays() {
         item.sellIn--;
         if (item.sellIn < 0) {
             updateQualityWhenSellExpired();

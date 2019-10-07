@@ -1,15 +1,18 @@
-package com.github.smeny;
+package com.github.smeny.gildedrose.items;
+
+import com.github.smeny.gildedrose.Item;
+import com.github.smeny.gildedrose.QualityItem;
 
 public class Conjured extends QualityItem {
 
-    static final String NAME = "Conjured";
+    public static final String NAME = "Conjured";
 
-    Conjured(Item item) {
+    public Conjured(Item item) {
         super(item);
     }
 
     @Override
-    void updateQuality() {
+    protected void updateQuality() {
         super.updateQuality();
         super.updateQuality();
     }

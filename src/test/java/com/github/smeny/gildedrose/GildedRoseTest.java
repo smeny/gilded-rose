@@ -1,5 +1,9 @@
-package com.github.smeny;
+package com.github.smeny.gildedrose;
 
+import com.github.smeny.gildedrose.items.AgedBrie;
+import com.github.smeny.gildedrose.items.BackstagePass;
+import com.github.smeny.gildedrose.items.Conjured;
+import com.github.smeny.gildedrose.items.Sulfuras;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

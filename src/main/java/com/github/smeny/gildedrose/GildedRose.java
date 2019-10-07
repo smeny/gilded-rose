@@ -1,6 +1,6 @@
-package com.github.smeny;
+package com.github.smeny.gildedrose;
 
-import static com.github.smeny.QualityItemFactory.buildQualityItem;
+import static com.github.smeny.gildedrose.QualityItemFactory.buildQualityItem;
 
 class GildedRose {
 

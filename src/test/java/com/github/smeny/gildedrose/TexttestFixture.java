@@ -1,4 +1,4 @@
-package com.github.smeny;
+package com.github.smeny.gildedrose;
 
 public class TexttestFixture {
 
