@@ -13,6 +13,8 @@ class QualityItemFactory {
                 return new Sulfuras(item);
             case BackstagePass.NAME:
                 return new BackstagePass(item);
+            case Conjured.NAME:
+                return new Conjured(item);
             default:
                 return new QualityItem(item);
         }

@@ -137,6 +137,30 @@ class GildedRoseTest {
         assertThat(firstItem(shop).quality, is(qualityZero));
     }
 
+    @Test
+    void conjured_item_degrades_twice_as_fast_with_remaining_sell_in() {
+        int sellInThirtyDays = 30, quality = 20;
+        Item commonItem = new Item(Conjured.NAME, sellInThirtyDays, quality);
+        GildedRose shop = buildGildedRoseShop(commonItem);
+
+        shop.updateQuality();
+
+        assertThat(firstItem(shop).sellIn, is(sellInThirtyDays - 1));
+        assertThat(firstItem(shop).quality, is(quality - 2));
+    }
+
+    @Test
+    void conjured_item_degrades_twice_as_fast_when_item_is_expired() {
+        int sellInToday = 0, quality = 20;
+        Item commonItem = new Item(Conjured.NAME, sellInToday, quality);
+        GildedRose shop = buildGildedRoseShop(commonItem);
+
+        shop.updateQuality();
+
+        assertThat(firstItem(shop).sellIn, is(sellInToday - 1));
+        assertThat(firstItem(shop).quality, is(quality - 4));
+    }
+
     private static GildedRose buildGildedRoseShop(Item... items) {
         return new GildedRose(items);
     }

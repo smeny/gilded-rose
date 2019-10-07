@@ -22,19 +22,20 @@ class QualityItem {
         }
     }
 
-    protected void increaseItemQualityIfUnderMaximum() {
+    protected void updateQualityWhenSellExpired() {
+        decreaseItemQualityIfOverMinimum();
+    }
+
+    protected final void increaseItemQualityIfUnderMaximum() {
         if (item.quality < ITEM_MAXIMUM_QUALITY) {
             item.quality++;
         }
     }
 
-    protected void decreaseItemQualityIfOverMinimum() {
+    protected final void decreaseItemQualityIfOverMinimum() {
         if (item.quality > ITEM_MINIMUM_QUALITY) {
             item.quality--;
         }
     }
 
-    protected void updateQualityWhenSellExpired() {
-        decreaseItemQualityIfOverMinimum();
-    }
 }
